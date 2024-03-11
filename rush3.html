@@ -3,11 +3,15 @@
 <head>
 <meta charset="utf-8">
 <style>	
+	/* 공통 */
 	table tr td {width:100px; border:1px solid;}
-	.line {background-color:#9e9e9e45; font-weight:bold; text-align:center;}
-	.t1 {margin-bottom:30px;}
-	.t1 tr {margin-top:30px;}
-	#arr {font-weight:bold;}
+	.line {background-color:#9e9e9e45; font-weight:bold; text-align:center;}	
+	
+	/* 검색 영역 */
+	#srh {height: 10%}
+	
+	/* 배열 영역 */
+	#arr {height: 80%; font-weight: bold;}
 		
 	.s3 {background-color:#f3ddb591;}
 	.s4 {background-color:#89a5f561;}
@@ -18,9 +22,7 @@
 	.search4 {font-weight:bold; border:6px solid blue; background: #ffff00;}
 	.search3 {font-weight:bold; border:6px solid red; background: #ffff00;}
 	.search2 {font-weight:bold; border:6px solid #e6572a; background: #ffff00;}
-	.search1 {font-weight:bold; border:6px solid #ff9800; background: #ffff00;}
-	
-	.type2 {display:none; font-size:30px;}
+	.search1 {font-weight:bold; border:6px solid #ff9800; background: #ffff00;}		
 	
 	#reset {background-color:#8080803b;}
 	
@@ -31,10 +33,10 @@
 	.blink { animation: blink-effect 0.5s step-end 2; }  
 
 	/* 버튼 */
-	.btn_srch {background-color: #0000ff54; width: 50%; height: 100px; border-radius: 0.5em; margin: 5px; padding: 15px;}
-	.btn_reset {background-color: #80808094; width: 50%; height: 100px; border-radius: 0.5em; left: 50%; margin: 5px; padding: 15px;}
+	.btn_srch {background-color: #0000ff54; width: 50%; height: 100px; border-radius: 0.5em; margin: 5px; padding: 15px 0 0 0;}
+	.btn_reset {background-color: #80808094; width: 50%; height: 100px; border-radius: 0.5em; left: 50%; margin: 5px; padding: 15px 0 0 0;}
 	
-	#btn_s {display: none; z-index: 2; background: white; width: 90%; height: 80%; position: absolute; top: 2%; left: 5%; overflow:hidden;}
+	
 	.btn_set {display:inline-block; width:90%; padding:30px; margin:10px; border-radius:0.3em; text-align:inherit; font-size:55px;}
 	.btn_set input {display:none;}
 	#btn_ch, btn_5, #btn_4, #btn_3, #btn_2, #btn_1 {margin:10px; font-size:25px;}
@@ -46,14 +48,22 @@
 	#btn_2 {background: #ffff001f; display:none; overflow-y:scroll; height:90%;}
 	#btn_1 {background: white; display:none; overflow-y:scroll; height:90%;}
 	.btn_select {background:yellow !important; font-weight:bold !important; font-color:blue !important;}
-	#btn_search {display:none; background:white; position:absolute; bottom:3%; width:90%; text-align:center; font-size:50px; z-index:5; left:5%;}
-	.btn_confirm {background:#3f51b5; color:white; padding:20px; margin:10px; border-radius:0.3em;}
-	.btn_cancel {background:gray; color:white; padding: 20px; margin:10px; margin-bottom:10px; border-radius:0.3em;}
+	
+	
 	.hide {display:none !important;}
 	#modal {display:none; position:absolute; left:0; top:0; width:100%; height:100%; background:black; opacity:0.5; z-index:1}
 	.set_btn {background: #89a5f5; color: white; font-weight:bold; font-size:20px; padding: 10px; margin-right:50px; border-radius:0.7em;}				
 		
-	.excpt_pack {color:white; background:white; border:0px solid;} //제외팩
+	/* 제외팩 */
+	.excpt_pack {color:white; background:white; border:0px solid;} 
+	
+	/* 검색 목록 */
+	#btn_s {display: none; z-index: 2; background: white; width: 90%; height: 85%; position: absolute; top: 2%; left: 5%; overflow:hidden;}
+	
+	/* 검색 버튼 */
+	#btn_search {display:none; background:white; position:absolute; bottom:3%; width:90%; text-align:center; font-size:50px; z-index:5; left:5%;}
+	.btn_confirm {background:#3f51b5; color:white; padding:20px; margin:10px; border-radius:0.3em; width: 50%;}
+	.btn_cancel {background:gray; color:white; padding: 20px; margin:10px; margin-bottom:10px; border-radius:0.3em; width: 50%;}
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -267,7 +277,8 @@
 	function fn_search(){
 		$("#modal").show();
 		$("#btn_s").show();
-		$("#btn_search").show();					
+		$("#btn_search").show();
+		$("#btn_search").css('display', 'flex');
 	}
 	
 	
@@ -506,7 +517,7 @@
 <body>
 <form name="aform">
 	<!-- 검색 -->
-	<table class="t" style='width:100%;'>
+	<table id='srh' style='width:100%;'>
 		<tr class="type1" style="text-align:center;">
 			<td style="width:50%; height:80px;" onclick="fn_search()">검색</td>				
 			<td id='reset' onclick="fn_reset()">초기화</td>	
@@ -522,7 +533,7 @@
 	</table>	
 	
 	
-	<div style="display:flex; font-size:50px; text-align:center; margin:10px; padding-top:20px;">
+	<div style="display:flex; font-size:50px; text-align:center; margin:10px;">
 		<div class='btn_srch type1' onclick='fn_search()'>검색</div>
 		<div class='btn_reset type1' onclick='fn_reset()'>취소</div>
 	</div>
