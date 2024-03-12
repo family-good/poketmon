@@ -5,13 +5,13 @@
 <style>	
 	/* 공통 */
 	table tr td {width:100px; border:1px solid;}
-	.line {background-color:#9e9e9e45; font-weight:bold; text-align:center;}	
+	.line {background-color:#15151645; font-weight:bold; text-align:center;}
 	
 	/* 검색 영역 */
 	#srh {height: 5%}
 	
 	/* 배열 영역 */
-	#arr {height: 85%; font-weight: bold;}
+	#arr {height: 90%; font-weight: bold;}
 		
 	.s3 {background-color:#f3ddb591;}
 	.s4 {background-color:#89a5f561;}
@@ -22,12 +22,7 @@
 	.search4 {font-weight:bold; border:6px solid blue; background: #ffff00;}
 	.search3 {font-weight:bold; border:6px solid red; background: #ffff00;}
 	.search2 {font-weight:bold; border:6px solid #e6572a; background: #ffff00;}
-	.search1 {font-weight:bold; border:6px solid #ff9800; background: #ffff00;}		
-	
-	#reset {background-color:#8080803b;}
-	
-	#s_type {height:40px;}
-	.effct {color:white; background-color:blue;}
+	.search1 {font-weight:bold; border:6px solid #ff9800; background: #ffff00;}	
 	
 	@keyframes blink-effect { 50% { opacity: 0; } } 
 	.blink { animation: blink-effect 0.5s step-end 2; }  
@@ -48,9 +43,7 @@
 	#btn_2 {background: #ffff001f; display:none; overflow-y:scroll; height:90%;}
 	#btn_1 {background: white; display:none; overflow-y:scroll; height:90%;}
 	.btn_select {background:yellow !important; font-weight:bold !important; font-color:blue !important;}
-	
-	
-	.hide {display:none !important;}
+		
 	#modal {display:none; position:absolute; left:0; top:0; width:100%; height:100%; background:black; opacity:0.5; z-index:1}
 	.set_btn {background: #89a5f5; color: white; font-weight:bold; font-size:20px; padding: 10px; margin-right:50px; border-radius:0.7em;}				
 		
@@ -327,7 +320,7 @@
 	}
 	
 	
-	 //5성, 4성, 3성 검색
+	 //검색
 	 function fn_btnch(type){
 		$("#btn_5, #btn_4, #btn_3, #btn_2, #btn_1").hide();
 		$("#btn_ch5, #btn_ch4, #btn_ch3, #btn_ch2, #btn_ch1").css("background", "white");
@@ -336,69 +329,7 @@
 		$("[name=btnch]").val(type);
 	 }
 	
-	
-	//검색 저장
-	function fn_setSave(num){
-		if($(".btn_select").length < 1){
-			alert('검색 조건이 없습니다.');
-			return;
-		}
 		
-		alert('저장 되었습니다.');
-		
-		//검색 탄
-		var part = $("[name=part]").val();
-		localStorage.setItem("part"+num, part);
-		
-		//검색 포켓몬
-		var search = [];
-		for(var i=0; i<$(".btn_select").length; i++){
-			search.push($(".btn_select").eq(i).prop('id'));
-		}		
-		localStorage.setItem("search"+num, search);			
-		
-		//제외 팩
-		localStorage.setItem("e_arr", e_arr);
-	}
-	
-	
-	//검색 로드
-	function fn_setLoad(num){
-					
-		fn_reset();
-	
-		//1. 검색 배열
-		var localPart = localStorage.getItem("part"+num); 
-		$("[name=part]").val(localPart);		
-		
-		fn_init();
-		
-		//2. 검색 값
-		var localSearch = localStorage.getItem("search"+num); 
-			
-		if(localSearch != null){
-			var arr = localSearch.split(",");
-			for(var i=0; i<arr.length; i++){
-				$("#"+arr[i]+"").addClass("btn_select");
-			}
-			
-			fn_confirm(); //3. 검색 시작
-		}else{
-			alert("저장"+num+" 데이터가 없습니다.");
-		}
-		
-		//3. 제외 팩
-		localEarr = localStorage.getItem("e_arr");
-		if(localEarr != null && localEarr != ""){
-			var arr = localEarr.split(",");			
-			for(var i=0; i<arr.length; i++){				
-				fn_pack(arr[i]);
-			}
-		}
-		
-	}
-	
-	
 	//검색 - 확인
 	function fn_confirm(){				
 		if($("#btn_s .btn_select").length == 0){
@@ -445,93 +376,18 @@
 		$("#btn_s").hide();
 		$("#btn_search").hide();		
 	}
-	
-		
-	//상성 - 5성 선택
-	function fn_sel_p(){
-		var sel_p = document.aform.sel_p.value;
-	
-		//효과
-		var 효과_Y = [];
-		var 효과_N = [];
-		var 효과 = [];	
-		
-		if(sel_p == ''){
-			$("[name=sel_p] option").eq(0).prop('selected', true);			
-			$("#effect_Y,#effect_N,#p_type,#p_attack span").text('');
-			return;
-		}
-		
-		//효과 있음
-		eval(sel_p).forEach(function(i){		
-			var a = i + "_Y";
-			eval(a).forEach(function(h){				
-				if(!효과_Y.includes(h)){
-					효과_Y.push(h);
-				}
-			})
-		})		
-		
-		//효과 없음
-		eval(sel_p).forEach(function(i){		
-			var a = i + "_N";
-			eval(a).forEach(function(h){
-				if(!효과_N.includes(h)){
-					효과_N.push(h);
-				}
-			})
-		})		
-		
-		//효과
-		효과_Y.forEach(function(i){
-			if(!효과_N.includes(i)){
-				효과.push(i);
-			}
-		});
-		
-		//타입 출력
-		var type = "";
-		var type_cnt = 0;
-		eval(sel_p).forEach(function(i){
-			if(type_cnt > 0) type += ", ";
-			type += i;	
-			type_cnt += 1;
-		});
-				
-		document.getElementById("p_type").innerHTML = type;				
-		
-		//효과 출력
-		var effect = "";
-		var effect_cnt = 0;
-		효과.forEach(function(i){
-			if(effect_cnt > 0) effect += ", ";
-			effect += i;	
-			effect_cnt += 1;
-		});
-						
-		$("#p_attack span").text(effect);
-	}	
 </script>
 </head>
 
 <body>
 <form name="aform">
-	<!-- 검색 -->
-	<table id='srh' style='width:100%;'>		
-		<tr class="type1" style="text-align:center;">
-			<td style="height:80px;" onclick="fn_setSave('1')">저장</td>
-			<td style="height:80px;" onclick="fn_setLoad('1');">로드</td>
-		</tr>
-	</table>
-	
 	<!-- 배열표 -->
-	<table class='type1' id='arr' readonly>	
-	</table>	
+	<table class='type1' id='arr' readonly></table>	
 	
 	
-	<div style="display:flex; font-size:50px; text-align:center; margin:10px;">
-		<div class='btn_srch type1' onclick='fn_search()'>검색</div>
+	<div style="display:flex; font-size:50px; text-align:center; margin:10px;">		
 		<div class='btn_reset type1' onclick='fn_reset()'>취소</div>
+		<div class='btn_srch type1' onclick='fn_search()'>검색</div>
 	</div>
 	
 	
@@ -557,11 +413,10 @@
 		<div id="btn_1"></div>
 	</div>
 	
-	<div id="btn_search">			
-		<div class="btn_confirm" id="btn_confirm" onclick="fn_confirm()">확인</div>
+	<div id="btn_search">					
 		<div class="btn_cancel" id="btn_cancel" onclick="fn_cancel()">취소</div>
+		<div class="btn_confirm" id="btn_confirm" onclick="fn_confirm()">확인</div>
 	</div>
-	<!-- 상세 -->
 	
 	<div id="modal"></div>
 </form>
