@@ -28,8 +28,9 @@
 	.blink { animation: blink-effect 0.5s step-end 2; }  
 
 	/* 버튼 */
-	.btn_srch {background-color: #0000ff54; width: 50%; height: 100px; border-radius: 0.5em; margin: 5px; padding: 15px 0 0 0;}
-	.btn_reset {background-color: #80808094; width: 50%; height: 100px; border-radius: 0.5em; left: 50%; margin: 5px; padding: 15px 0 0 0;}
+	.btn_load {background-color: #ffe00054; width: 20%; height: 100px; border-radius: 0.5em; margin: 5px; padding: 15px 0 0 0;}
+	.btn_srch {background-color: #0000ff54; width: 40%; height: 100px; border-radius: 0.5em; margin: 5px; padding: 15px 0 0 0;}
+	.btn_reset {background-color: #80808094; width: 40%; height: 100px; border-radius: 0.5em; left: 50%; margin: 5px; padding: 15px 0 0 0;}
 	
 	
 	.btn_set {display:inline-block; width:90%; padding:30px; margin:10px; border-radius:0.3em; text-align:inherit; font-size:55px;}
@@ -371,10 +372,50 @@
 			}
 		}		
 		
-		fn_excpt();
+		fn_excpt();		
 				
 		$("#btn_s").hide();
-		$("#btn_search").hide();		
+		$("#btn_search").hide();
+		
+		//저장
+		var search = [];
+		for(var i=0; i<$(".btn_select").length; i++){
+			search.push($(".btn_select").eq(i).prop('id'));
+		}		
+		localStorage.setItem("search", search);			
+				
+		localStorage.setItem("e_arr", e_arr); //제외 팩		
+	}
+	
+	
+	//검색 로드
+	function fn_setLoad(){				
+		fn_reset();	
+		
+		fn_init();
+				
+		var localSearch = localStorage.getItem("search"); 
+			
+		if(localSearch != null){
+			var arr = localSearch.split(",");
+			for(var i=0; i<arr.length; i++){
+				$("#"+arr[i]+"").addClass("btn_select");
+			}
+			
+			fn_confirm(); //검색 시작
+		}else{
+			alert("저장 데이터가 없습니다.");
+		}
+		
+		//제외 팩
+		localEarr = localStorage.getItem("e_arr");
+		if(localEarr != null && localEarr != ""){
+			var arr = localEarr.split(",");			
+			for(var i=0; i<arr.length; i++){				
+				fn_pack(arr[i]);
+			}
+		}
+		
 	}
 </script>
 </head>
@@ -386,6 +427,7 @@
 	
 	
 	<div style="display:flex; font-size:50px; text-align:center; margin:10px;">		
+		<div class='btn_load type1' onclick='fn_setLoad()'>로드</div>
 		<div class='btn_reset type1' onclick='fn_reset()'>취소</div>
 		<div class='btn_srch type1' onclick='fn_search()'>검색</div>
 	</div>
