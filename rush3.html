@@ -319,7 +319,6 @@
 		})
 		
 		if(e_arr != null && e_arr != ""){
-		
 			e_arr.forEach(function(i){
 				$("."+i).addClass("excpt_pack");
 			});
@@ -327,8 +326,8 @@
 	}
 	
 	
-	 //검색
-	 function fn_btnch(type){
+	//검색
+	function fn_btnch(type){
 		$("#btn_5, #btn_4, #btn_3, #btn_2, #btn_1").hide();
 		$("#btn_ch5, #btn_ch4, #btn_ch3, #btn_ch2, #btn_ch1").css("background", "white");
 		$("#btn_"+type).show();
@@ -338,11 +337,11 @@
 	
 		
 	//검색 - 확인
-	function fn_confirm(){				
+	function fn_confirm(){		
 		if($("#btn_s .btn_select").length == 0){
 			fn_reset();
 			return;
-		}
+		}		
 		
 		$("#modal").hide();
 		
@@ -377,8 +376,8 @@
 				}
 			}
 		}
-		
-		fn_excpt();		
+				
+		fn_excpt();
 				
 		$("#btn_s").hide();
 		$("#btn_search").hide();
@@ -389,43 +388,40 @@
 	
 	
 	//저장
-	function fn_setSave(){
+	function fn_setSave(){			
 		var search = [];
 		for(var i=0; i<$(".btn_select").length; i++){
 			search.push($(".btn_select").eq(i).prop('id'));
 		}		
 		localStorage.setItem("search", search);			
 				
-		localStorage.setItem("e_arr", e_arr); //제외 팩
-		
-		console.log('e_arr', e_arr);
-		console.log('localStoarge', localStorage);
+		localStorage.setItem("e_arr", e_arr); //제외 팩				
 	}
 	
 	
 	//검색 로드
 	function fn_setLoad(){				
-		fn_reset();	
-		
-		fn_init();
+		fn_reset();
 				
 		var localSearch = localStorage.getItem("search"); 
 			
 		if(localSearch != null){
-			var arr = localSearch.split(",");
-			for(var i=0; i<arr.length; i++){
-				$("#"+arr[i]+"").addClass("btn_select");
+			if(localSearch != ''){
+				var arr = localSearch.split(",");
+				for(var i=0; i<arr.length; i++){
+					$("#"+arr[i]+"").addClass("btn_select");
+				}
 			}
 
 			//제외 팩
-			localEarr = localStorage.getItem("e_arr");
+			localEarr = localStorage.getItem("e_arr");						
 		
 			if(localEarr != null && localEarr != ""){
 				var arr = localEarr.split(",");			
 				for(var i=0; i<arr.length; i++){				
 					fn_pack(arr[i]);
 				}
-			}	
+			}						
 		
 			fn_confirm(); //검색 시작
 		}else{
