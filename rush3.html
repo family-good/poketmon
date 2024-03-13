@@ -15,8 +15,8 @@
 		
 	.s3 {background-color:#f3ddb591;}
 	.s4 {background-color:#89a5f561;}
-	.s5 {background-color:#9f7de58f;}
-	.lucky {background-color:#ef254840}
+	.s5 {background-color:#9f7de5bf;}
+	.lucky {background-color:#fd032f61}
 	
 	.search5 {font-weight:bold; border:6px solid #673AB7; background: #ffff00;}
 	.search4 {font-weight:bold; border:6px solid blue; background: #ffff00;}
@@ -218,8 +218,7 @@
 				if(i == 0){
 					html += "<td class='line'>"+arr[i]+"</td>";
 				}else{
-					//행운
-					if(arr[i] == "5지가르데" || arr[i] == "5다크라이" || arr[i] == "5따라큐" || arr[i] == "4크리세리아" || arr[i] == "4피카츄"){ 
+					if(arr[i] == "5지가르데" || arr[i] == "5다크라이" || arr[i] == "5따라큐" || arr[i] == "4크리세리아" || arr[i] == "4피카츄"){ //행운
 						html += "<td class='p"+i+" s"+arr[i].substr(0,1)+" lucky'>"+arr[i].substr(0,1)+" "+arr[i].substr(1)+"</td>";					
 					}else{
 						html += "<td class='p"+i+" s"+arr[i].substr(0,1)+"'>"+arr[i].substr(0,1)+" "+arr[i].substr(1)+"</td>";
@@ -243,8 +242,12 @@
 			arr.sort();
 			var html = "";			
 			arr.forEach(function(i, idx){				
-				html += "<tr>";				
-				html += "<td class='btn_set' id='"+h+i+"'> "+i+"</td>";
+				html += "<tr>";			
+				if(i == "지가르데" || i == "다크라이" || i == "따라큐" || i == "크리세리아" || i == "피카츄"){ //행운
+					html += "<td class='btn_set lucky' id='"+h+i+"'> "+i+"</td>";
+				}else{
+					html += "<td class='btn_set' id='"+h+i+"'> "+i+"</td>";
+				}				
 				html += "</tr>";
 			});
 			html = "<table style='width:100%; padding:2%;'>"+html+"</table>";
@@ -257,6 +260,9 @@
 	function fn_pack(pack){
 		$("."+pack).addClass('excpt_pack');
 		e_arr.push(pack);
+		
+		//저장
+		fn_setSave();
 	}
 	
 	
@@ -370,7 +376,7 @@
 					}
 				}
 			}
-		}		
+		}
 		
 		fn_excpt();		
 				
@@ -378,13 +384,22 @@
 		$("#btn_search").hide();
 		
 		//저장
+		fn_setSave();
+	}
+	
+	
+	//저장
+	function fn_setSave(){
 		var search = [];
 		for(var i=0; i<$(".btn_select").length; i++){
 			search.push($(".btn_select").eq(i).prop('id'));
 		}		
 		localStorage.setItem("search", search);			
 				
-		localStorage.setItem("e_arr", e_arr); //제외 팩		
+		localStorage.setItem("e_arr", e_arr); //제외 팩
+		
+		console.log('e_arr', e_arr);
+		console.log('localStoarge', localStorage);
 	}
 	
 	
@@ -401,21 +416,21 @@
 			for(var i=0; i<arr.length; i++){
 				$("#"+arr[i]+"").addClass("btn_select");
 			}
-			
+
+			//제외 팩
+			localEarr = localStorage.getItem("e_arr");
+		
+			if(localEarr != null && localEarr != ""){
+				var arr = localEarr.split(",");			
+				for(var i=0; i<arr.length; i++){				
+					fn_pack(arr[i]);
+				}
+			}	
+		
 			fn_confirm(); //검색 시작
 		}else{
 			alert("저장 데이터가 없습니다.");
 		}
-		
-		//제외 팩
-		localEarr = localStorage.getItem("e_arr");
-		if(localEarr != null && localEarr != ""){
-			var arr = localEarr.split(",");			
-			for(var i=0; i<arr.length; i++){				
-				fn_pack(arr[i]);
-			}
-		}
-		
 	}
 </script>
 </head>
