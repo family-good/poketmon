@@ -216,7 +216,7 @@
 				if(i == 0){
 					html += "<td class='line'>"+arr[i]+"</td>";
 				}else{
-					if(arr[i] == "5지가르데" || arr[i] == "5다크라이" || arr[i] == "5따라큐" || arr[i] == "4크리세리아" || arr[i] == "4피카츄" || arr[i] == "3갸라도스"){ //행운
+					if(arr[i] == "5지가르데" || arr[i] == "5다크라이" || arr[i] == "5따라큐" || arr[i] == "4크리세리아" || arr[i] == "4쉐이미" || arr[i] == "4피카츄" || arr[i] == "3갸라도스"){ //행운
 						html += "<td class='p"+i+" s"+arr[i].substr(0,1)+" lucky'>"+arr[i].substr(0,1)+" "+arr[i].substr(1)+"</td>";					
 					}else{
 						html += "<td class='p"+i+" s"+arr[i].substr(0,1)+"'>"+arr[i].substr(0,1)+" "+arr[i].substr(1)+"</td>";
@@ -241,7 +241,7 @@
 			var html = "";			
 			arr.forEach(function(i, idx){				
 				html += "<tr>";			
-				if(i == "지가르데" || i == "다크라이" || i == "따라큐" || i == "크리세리아" || i == "피카츄" || i == "갸라도스"){ //행운
+				if(i == "지가르데" || i == "다크라이" || i == "따라큐" || i == "크리세리아" || i == "쉐이미" || i == "피카츄" || i == "갸라도스"){ //행운
 					html += "<td class='btn_set lucky' id='"+h+i+"'> "+i+"</td>";
 				}else{
 					html += "<td class='btn_set' id='"+h+i+"'> "+i+"</td>";
