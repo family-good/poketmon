@@ -1,0 +1,100 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <style>
+	  #list {line-height:2; font-size:20px;}
+	  [type='checkbox']{width:15; height:15}
+	  #btn {display:flex; margin:20px;}
+	  #btn > div {border:1px solid blue; height:30px; width:100px; background:blue; color:white; margin:0 10px; text-align:center;}
+	  #cnt {margin:30px; line-height:2;}
+  </style>
+  <script>
+	$(document).ready(function(){
+	    //날짜
+	    var today = new Date();
+	    var year = today.getFullYear();
+	    var month = today.getMonth() + 1;
+	    var day = today.getDate();
+	    var date = today.getDay();
+	    if(date == 0){ date = "일" 
+	    }else if(date == 1){ date = "월"
+	    }else if(date == 2){ date = "화"
+	    }else if(date == 3){ date = "수"
+	    }else if(date == 4){ date = "목"
+	    }else if(date == 5){ date = "금"
+	    }else if(date == 6){ date = "토" }
+	    
+	    //storage
+	    var key = year + "/" + month + "/" + day;
+	    
+	    //최초
+	    var list = ['김대열','김영광','진원일', '김혁수', '이종하', '이명훈'];	
+		list.sort();
+		list.push('신입1', '신입2', '게스트1', '게스트2');
+	    var html = "";
+	    var cnt = 1;
+	    for(var i=0; i<list.length; i++){
+	        html += "<input type='checkbox' name='att' id="+list[i]+" value='"+list[i]+"'>";
+		    html += "<label for="+list[i]+">"+list[i]+"</label>";
+	        html += "&emsp;"
+		    if(cnt%5 == 0){ 		  
+		      html += "<br>"; 
+		    }		
+		    cnt +=1;
+		}		  
+		$("#list").html(html);	
+	  
+	    //체크
+	    $("[name=att]").change(function(){			
+		  fn_list();
+	    });
+	  
+	    //초기화
+	    $("#btn1").click(function(){
+		  $("#list [name='att']").prop("checked", false);
+		  $("#cnt").html("");		
+	    });
+	  
+	    //로드
+	    $("#btn2").click(function(){
+		  var current = localStorage.getItem("current");
+		  var arr = current.split(',');
+		  for(var i=0; i<arr.length; i++){			
+		  	$("#"+arr[i]).prop("checked", true);
+		  }
+		  fn_list();
+	    });
+	  
+		//명단
+		function fn_list(){
+			var chk = $("#list [name='att']:checked");
+			var cnt2 = "";
+			var chk_arr = [];
+			for(var i=0; i<chk.length; i++){
+				if(i != 0) cnt2 += ", ";
+				cnt2 += chk.eq(i).val();
+				chk_arr.push(chk.eq(i).val());
+			}
+			
+			
+			var cnt1 = year + "년" + month + "월" + day + "일" + "(" + date + ") 출석부<br>";
+			var html = cnt1 + cnt2;
+			$("#cnt").html(html);
+			
+			localStorage.setItem("current", chk_arr);
+			localStorage.setItem(key, chk_arr);		
+		}
+	});
+	
+  </script>
+</head>
+<body>
+  <div id="list"></div>
+  <div id="btn">
+    <div id="btn1">초기화</div>
+    <div id="btn2">로드</div>
+  </div>
+  <div id="cnt"></div>
+</body>
+</html>
