@@ -216,7 +216,7 @@
 				if(i == 0){
 					html += "<td class='line'>"+arr[i]+"</td>";
 				}else{
-					if(arr[i] == "5펄기아" || arr[i] == "5후파" || arr[i] == "5디아루가" || arr[i] == "5후파"){ //행운
+					if(arr[i] == "5펄기아" || arr[i] == "5후파" || arr[i] == "5디아루가"){ //행운
 						html += "<td class='p"+i+" s"+arr[i].substr(0,1)+" lucky'>"+arr[i].substr(0,1)+" "+arr[i].substr(1)+"</td>";					
 					}else{
 						html += "<td class='p"+i+" s"+arr[i].substr(0,1)+"'>"+arr[i].substr(0,1)+" "+arr[i].substr(1)+"</td>";
@@ -241,7 +241,7 @@
 			var html = "";			
 			arr.forEach(function(i, idx){				
 				html += "<tr>";			
-				if(i == "새벽의날개" || i == "황혼의갈기" || i == "뮤" || i == "테오키스" || i == "뮤츠" || i == "레지기가스" || i == "디안시"){ //행운
+				if(i == "펄기아" || i == "후파" || i == "디아루가"){ //행운
 					html += "<td class='btn_set lucky' id='"+h+i+"'> "+i+"</td>";
 				}else{
 					html += "<td class='btn_set' id='"+h+i+"'> "+i+"</td>";
